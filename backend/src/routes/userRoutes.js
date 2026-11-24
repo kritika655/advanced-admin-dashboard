@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { protect, authorize } from '../middleware/auth.js';
+import { listUsers, createUser, updateUser, deleteUser } from '../controllers/userController.js';
+const router = Router();
+router.use(protect);
+router.get('/', authorize('super_admin', 'admin'), listUsers);
+router.post('/', authorize('super_admin', 'admin'), createUser);
+router.patch('/:id', authorize('super_admin', 'admin'), updateUser);
+router.delete('/:id', authorize('super_admin', 'admin'), deleteUser);
+export default router;
